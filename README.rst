@@ -28,8 +28,8 @@ Glances - An eye on your system
 .. image:: https://scrutinizer-ci.com/g/nicolargo/glances/badges/quality-score.png?b=develop
     :target: https://scrutinizer-ci.com/g/nicolargo/glances/?branch=develop
 
-.. image:: https://img.shields.io/badge/Donate-PayPal-green.svg
-    :target: https://www.paypal.me/nicolargo
+.. image:: https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&link=https://github.com/sponsors/nicolargo
+    :target: https://github.com/sponsors/nicolargo
 
 .. image:: https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40nicolargo
     :target: https://twitter.com/nicolargo
@@ -433,8 +433,7 @@ Donation
 
 If this project help you, you can give me a tip ;)
 
-.. image:: https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif
-        :target: https://www.paypal.me/nicolargo
+See the sponsors_ page.
 
 Author
 ======
@@ -457,3 +456,4 @@ Glances is distributed under the LGPL version 3 license. See ``COPYING`` for mor
 .. _forum: https://groups.google.com/forum/?hl=en#!forum/glances-users
 .. _wiki: https://github.com/nicolargo/glances/wiki/How-to-contribute-to-Glances-%3F
 .. _package: https://repology.org/metapackage/glances/packages
+.. _sponsors: https://github.com/sponsors/nicolargo
