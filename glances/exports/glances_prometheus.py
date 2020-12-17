@@ -21,6 +21,7 @@
 
 import sys
 from numbers import Number
+import socket
 
 from glances.logger import logger
 from glances.exports.glances_export import GlancesExport
@@ -28,7 +29,29 @@ from glances.compat import iteritems, listkeys
 
 from prometheus_client import start_http_server, Gauge
 
+def detect_port(port, ip="127.0.0.1"):
+    """Test whether the port is occupied.
+    Args:
+        port (int): port number.
+        ip (str): Ip address.
+    Returns:
+        True -- it's possible to listen on this port for TCP/IPv4 or TCP/IPv6
+                connections.
+        False -- otherwise.
+    """
+    ready = True
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind((ip, port))
+        sock.listen(5)
+        sock.close()
+    except socket.error:
+        ready = False
+        raise RuntimeError("The server is already running on port {0}".format(port))
+    finally:
+        return ready
 
+    
 class Export(GlancesExport):
 
     """This class manages the Prometheus export module."""
@@ -62,8 +85,17 @@ class Export(GlancesExport):
 
     def init(self):
         """Init the Prometheus Exporter"""
+        
         try:
-            start_http_server(port=int(self.port), addr=self.host)
+            if detect_port(int(self.port)):  # check if the port is available
+                print(f"port {self.port} is available. start_http_server.")
+                start_http_server(port=int(self.port))
+            else:
+#                 self.port = str(int(self.port)+1)
+#                 print(f"[Warning]: port {int(self.port)-1} was already in use. Use another port: {self.port} ")
+#                 self.init()
+                print(f"[Warning]: port {self.port} was already in use. Use another port: 9092")
+                start_http_server(port=9092)
         except Exception as e:
             logger.critical("Can not start Prometheus exporter on {}:{} ({})".format(self.host, self.port, e))
             sys.exit(2)
@@ -73,10 +105,10 @@ class Export(GlancesExport):
     def export(self, name, columns, points):
         """Write the points to the Prometheus exporter using Gauge."""
         logger.debug("Export {} stats to Prometheus exporter".format(name))
-
+        import socket
+        hostname = socket.gethostname()
         # Remove non number stats and convert all to float (for Boolean)
         data = {k: float(v) for (k, v) in iteritems(dict(zip(columns, points))) if isinstance(v, Number)}
-
         # Write metrics to the Prometheus exporter
         for k, v in iteritems(data):
             # Prometheus metric name: prefix_<glances stats name>
@@ -85,6 +117,7 @@ class Export(GlancesExport):
             # See: https://prometheus.io/docs/practices/naming/
             for c in ['.', '-', '/', ' ']:
                 metric_name = metric_name.replace(c, self.METRIC_SEPARATOR)
+            metric_name = hostname + self.METRIC_SEPARATOR + metric_name
             # Get the labels
             labels = self.parse_tags(self.labels)
             # Manage an internal dict between metric name and Gauge
