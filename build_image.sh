@@ -22,20 +22,16 @@ readonly -a cpu_image=(${BASE_CPU_IMAGE:-${DEFAULT_BASE_CPU_IMAGE}})
 
 function build_docker_images(){
   for t in "${targets[@]}"; do
-    if [ "$t" == "gpu" ]; then
-      BASE_IMAGE=${gpu_image}
+#     if [ "$t" == "gpu" ]; then
+#       BASE_IMAGE=${gpu_image}
+#       RECSYS_IMAGE="cambridgeltl/glances:${GIT_VERSION}-${GIT_COMMIT}-gpu"
+#     else
+#       BASE_IMAGE=${cpu_image}
+#       RECSYS_IMAGE="cambridgeltl/glances:${GIT_VERSION}-${GIT_COMMIT}"
+#     fi
       RECSYS_IMAGE="cambridgeltl/glances:${GIT_VERSION}-${GIT_COMMIT}-gpu"
-    else
-      BASE_IMAGE=${cpu_image}
-      RECSYS_IMAGE="cambridgeltl/glances:${GIT_VERSION}-${GIT_COMMIT}"
-    fi
-
     docker build --no-cache --build-arg BASE_IMAGE="$BASE_IMAGE" -t "${RECSYS_IMAGE}" -f "${RECSYS_ROOT}/Dockerfile" ${RECSYS_ROOT}
-    mkdir -p "${RECSYS_OUTPUT_DIR}/${t}"
-    docker save ${RECSYS_IMAGE} > "${RECSYS_OUTPUT_DIR}/${t}/cambridgeltl-glances-${t}.tar"
   done
-
-  echo "build result: ${RECSYS_OUTPUT_DIR}"
 }
 
-build_docker_images 
+build_docker_images
