@@ -107,6 +107,7 @@ class Export(GlancesExport):
         logger.debug("Export {} stats to Prometheus exporter".format(name))
         import socket
         hostname = socket.gethostname()
+        hostname = hostname.replace("_glances","")
         # Remove non number stats and convert all to float (for Boolean)
         data = {k: float(v) for (k, v) in iteritems(dict(zip(columns, points))) if isinstance(v, Number)}
         # Write metrics to the Prometheus exporter
