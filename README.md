@@ -2,7 +2,7 @@
 
 
 #### Updates on 15 Jan, 2021.
-Now we have provide a script for installing and running glances automatically. Please download [install_and_run_docker_glances.sh](https://github.com/cambridgeltl/glances/blob/develop/install_and_run_docker_glances.sh) and run is with a "sudo" user. 
+Now we have provide a script for installing and running glances automatically. Please download [install_and_run_docker_glances.sh](https://github.com/cambridgeltl/glances/blob/develop/install_and_run_docker_glances.sh) and run it with a "sudo" user. 
 
 The basic pipeline of these script is the following:
 	(1) install docker.
