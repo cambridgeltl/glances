@@ -7,7 +7,7 @@ Requires=docker.service
 Restart=always
 ExecStartPre=-/usr/bin/docker stop glances-docker
 ExecStartPre=-/usr/bin/docker rm glances-docker
-ExecStart=/bin/bash -c "/usr/bin/nvidia-docker run -h $(hostname)_glances -d -p 9091:9091 --name glances-docker cambridgeltl/glances:v3.1.5-9047263-gpu"
+ExecStart=/bin/bash -c "/usr/bin/nvidia-docker run -h $(hostname)_glances -d -p 9091:9091 --name glances-docker mengzaiqiao/glances:v3.1.5-24d51a99-gpu"
 ExecStop=/usr/bin/nvidia-docker stop glances-docker
 
 [Install]
