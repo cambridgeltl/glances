@@ -1,5 +1,19 @@
 # Installation Guide for LTLers
 
+
+#### Updates on 15 Jan, 2021.
+Now we have provide a script for installing and running glances automatically. Please download [install_and_run_docker_glances.sh](https://github.com/cambridgeltl/glances/blob/develop/install_and_run_docker_glances.sh) and run is with a "sudo" user. 
+
+The basic pipeline of these script is the following:
+	(1) install docker.
+	(2) install nvidia-docker
+	(3) pull glances-docker image from docker-hub
+	(4) run the container as an linux service
+
+After the running this scripting, you should able to see the exported resource data through: http://your_machine_ip:9091/.
+
+----
+
 There are two ways to have the glances installed in your machine and start monitoring: 
 
 - Install it using pip and run it in the backend (ideally as a service),
