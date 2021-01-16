@@ -19,3 +19,8 @@ systemctl restart docker
 wget https://raw.githubusercontent.com/cambridgeltl/glances/develop/glances-docker.service -O /etc/systemd/system/glances-docker.service
 systemctl enable glances-docker
 systemctl start glances-docker
+echo "======================================================"
+echo "Now the Docker is installed as a root user, which will affect the its usage for a non-root user."
+echo "For managing Docker as a non-root user, please configure your Linux hosts refering to:"
+echo "https://docs.docker.com/engine/install/linux-postinstall/"
+echo "======================================================"
